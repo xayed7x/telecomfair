@@ -1,13 +1,15 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Phone, MapPin, Search, Moon, Sun } from "lucide-react";
+import { useCart } from "@/context/CartContext";
+import { Menu, X, Phone, MapPin, Search, Moon, Sun, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { cartCount } = useCart();
 
   const ModeToggle = () => {
     const { setTheme, theme } = useTheme();
@@ -104,12 +106,19 @@ const Header = () => {
             >
               Contact
             </Link>
-            <Button
-              variant="outline"
-              className="border-luxury-gold bg-luxury-gold text-luxury-dark hover:bg-luxury-gold/90"
-            >
-              Visit Store
-            </Button>
+            <Link href="/cart" className="relative">
+              <Button
+                variant="outline"
+                className="border-luxury-gold bg-luxury-gold text-luxury-dark hover:bg-luxury-gold/90"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </Button>
+            </Link>
             <ModeToggle />
           </nav>
 
@@ -170,12 +179,15 @@ const Header = () => {
             >
               Contact
             </Link>
-            <Button
-              variant="outline"
-              className="w-full mt-2 border-luxury-gold bg-luxury-gold text-luxury-dark hover:bg-luxury-gold/90"
-            >
-              Visit Store
-            </Button>
+            <Link href="/cart">
+              <Button
+                variant="outline"
+                className="w-full mt-2 border-luxury-gold bg-luxury-gold text-luxury-dark hover:bg-luxury-gold/90"
+              >
+                <ShoppingCart className="h-5 w-5 mr-2" />
+                View Cart ({cartCount})
+              </Button>
+            </Link>
             <ModeToggle />
           </nav>
         )}

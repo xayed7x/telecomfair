@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { CartProvider } from "@/context/CartContext";
 import Header from "@/components/Header"; // Your import
 import Footer from "@/components/Footer"; // Your import
 
@@ -22,13 +23,15 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light" // <-- This forces dark mode to match your prototype!
+          defaultTheme="dark" // <-- This forces dark mode to match your prototype!
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <CartProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </CartProvider>
         </ThemeProvider>
       </body>
     </html>

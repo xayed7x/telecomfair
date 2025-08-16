@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Product } from "@/types";
+import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
@@ -15,8 +16,10 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { toast } = useToast();
+  const { addToCart } = useCart();
 
   const handleAddToCart = () => {
+    addToCart(product);
     toast({
       title: "Added to Cart",
       description: `${product.name} has been added to your cart.`,
